@@ -10,7 +10,7 @@
 
   - name: Set environment variables for project
     set_fact: 
-      BACK_HOST: "{{ BACK_HOST }}"
+      BACK_HOST: "{{ BACK_HOST_VAR }}"
   
   - name: Update and upgrade apt packages
     become: true
