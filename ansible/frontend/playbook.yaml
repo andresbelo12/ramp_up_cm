@@ -40,7 +40,7 @@
     - name: Clone the repository
       git:
         repo: https://github.com/andresbelo12/movie-analyst-ui.git
-        dest: "/"
+        dest: "/movie-analyst-ui"
 
     - name: Install npm packages 
       npm: 
