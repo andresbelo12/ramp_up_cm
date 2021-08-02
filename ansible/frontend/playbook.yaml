@@ -71,7 +71,7 @@
         name: ui
         tag: v1
         force_source: yes
-        push: yes
+        push: no
         source: build
       delegate_to: 127.0.0.1
       become: yes  
