@@ -73,6 +73,7 @@
         dest: "{{ repo_path }}"
         update: "{{ update_repo }}"
         version: "{{ default_branch }}"
+      become: yes
     
     - name: Build an image and push
       docker_image:
