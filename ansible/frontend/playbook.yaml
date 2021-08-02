@@ -67,7 +67,7 @@
     - name: Build an image and push
       docker_image:
         build:
-          path: /movie-analyst-ui
+          path: /movie-analyst-ui/
         name: ui
         tag: v1
         force_source: yes
