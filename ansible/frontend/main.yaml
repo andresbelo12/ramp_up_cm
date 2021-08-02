@@ -1,0 +1,104 @@
+---
+- hosts: local
+  connection: local
+
+  vars:
+    github_repo_url: https://github.com/andresbelo12/movie-analyst-ui.git
+    repo_path: /movie-analyst-ui
+    update_repo: yes
+    default_branch: master
+    docker_image_name: ui
+    docker_container_name: ui_cont
+    application_port: "3030:3030"
+
+  pre_tasks:
+
+  - name: install packages required by docker
+    become: true
+    apt:
+      update_cache: yes
+      state: latest
+      name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gpg-agent
+      - software-properties-common #One day
+  
+  tasks:
+
+    - name: add docker GPG key
+      become: true
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: add docker apt repo
+      become: true
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: install docker
+      become: true
+      apt:
+        update_cache: yes
+        state: latest
+        name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    ##### setup ansible <---> docker
+
+    - name: install python dependencies
+      become: true
+      apt:
+        update_cache: yes
+        state: latest
+        name: python3-pip
+
+    - name: install 'Docker SDK for Python'
+      pip:
+        name: docker
+
+    - name: Start docker service
+      service:
+        name: docker
+        state: started
+
+    - name: Clone the repository
+      git:
+        repo: "{{ github_repo_url }}"
+        dest: "{{ repo_path }}"
+        update: "{{ update_repo }}"
+        version: "{{ default_branch }}"
+      become: yes
+    
+    - name: Build an image and push
+      docker_image:
+        name: "{{ docker_image_name }}"
+        build:
+          pull: yes
+          path: "{{ repo_path }}/"
+        force_source: yes
+        push: no
+        source: build
+      delegate_to: 127.0.0.1
+      become: yes  
+
+    - name: Create container
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image_name }}"
+        state: started
+        recreate: yes
+        published_ports:
+          - "{{ application_port }}"
+        env:
+          BACK_HOST: "{{ BACK_HOST }}"
+      become: yes  
+    
+  
+
+  
