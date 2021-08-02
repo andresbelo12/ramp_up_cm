@@ -3,3 +3,4 @@
 
 [local:vars]
 ansible_connection=local
+BACK_HOST = ${BACK_HOST}

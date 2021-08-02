@@ -3,15 +3,8 @@
   connection: local
   become: yes
 
-  vars:
-    BACK_HOST_VAR: aaaaa
-
   pre_tasks:
 
-  - name: Set environment variables for project
-    set_fact: 
-      BACK_HOST: "{{ BACK_HOST_VAR }}"
-  
   - name: Update and upgrade apt packages
     become: true
     apt:
@@ -21,40 +14,41 @@
   
   tasks:
 
-    - name: Install the nodejs
+    - name: Install docker
       apt:
-        name: nodejs
+        name:  docker.io
         state: present
 
-    - name: Install NPM
-      apt:
-        name: npm
-        state: present
-
-    - name: install pm2
-      npm:
-        name: pm2
-        global: yes
-        state: present   
+    - name: Start docker service
+      service:
+        name: docker
+        state: started
 
     - name: Clone the repository
       git:
         repo: https://github.com/andresbelo12/movie-analyst-ui.git
         dest: "/movie-analyst-ui"
-
-    - name: Install npm packages 
-      npm: 
-        path: /movie-analyst-ui
-        executable: /usr/bin/npm
-
-    - name: Delete old pm2 process
-      command: pm2 delete ui
-      ignore_errors: yes
-
-    - name: Start pm2
-      command: pm2 start /movie-analyst-ui/server.js --name ui
     
-    - name: nada
-      shell: "echo $BACK_HOST && pm2 status"
+    - name: Build an image and push
+      docker_image:
+        build:
+          path: /movie-analyst-ui
+        name: ui
+        tag: v1
+        force_source: yes
+        push: yes
+        source: build
+      delegate_to: 127.0.0.1
+      become: no  
 
+    - name: Create container
+      docker_container:
+        name: ui
+        image: movie-analyst-ui/ui:v1
+        state: started
+        recreate: yes
+        published_ports:
+          - "3030:3030"
+    
+    
     
