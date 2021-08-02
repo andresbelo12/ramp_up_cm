@@ -61,17 +61,17 @@
 
     - name: Clone the repository
       git:
-        repo: https://github.com/andresbelo12/movie-analyst-ui.git
-        dest: "/movie-analyst-ui"
+        repo: https://github.com/andresbelo12/movie-analyst-api.git
+        dest: "/movie-analyst-api"
         update: yes
         version: master
     
     - name: Build an image and push
       docker_image:
-        name: ui
+        name: api
         build:
           pull: yes
-          path: /movie-analyst-ui/
+          path: /movie-analyst-api/
         force_source: yes
         push: no
         source: build
@@ -80,21 +80,16 @@
 
     - name: Create container
       docker_container:
-        name: ui_cont
-        image: ui
+        name: api_cont
+        image: api
         state: started
         recreate: yes
         published_ports:
-          - "3030:3030"
+          - "3000:3000"
+        env:
+          PORT: "3000"
       become: yes  
     
-    - name: Print the gateway for each host when defined
-      ansible.builtin.debug:
-        msg: "System {{ BACK_HOST }} "
-
-    - name: Display all variables/facts known for a host
-      debug:
-        var: hostvars[inventory_hostname]
-        verbosity: 4
+    
 
   
