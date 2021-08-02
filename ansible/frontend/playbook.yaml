@@ -63,6 +63,8 @@
       git:
         repo: https://github.com/andresbelo12/movie-analyst-ui.git
         dest: "/movie-analyst-ui"
+        update: yes
+        version: master
     
     - name: Build an image and push
       docker_image:
