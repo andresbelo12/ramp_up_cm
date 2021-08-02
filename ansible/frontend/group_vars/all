@@ -2,4 +2,4 @@
 # frontend/group_vars/all
 
 
-BACK_HOST: localhost
+BACK_HOST: internal-ramp-up-tf-andreslopezb-back-lb-217131446.us-west-1.elb.amazonaws.com
