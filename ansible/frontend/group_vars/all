@@ -1,5 +1,4 @@
----
-# frontend/group_vars/all
+
 
 
 BACK_HOST: localhost
