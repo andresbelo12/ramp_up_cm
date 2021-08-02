@@ -66,10 +66,10 @@
     
     - name: Build an image and push
       docker_image:
-        build:
-          path: /movie-analyst-ui/
         name: ui
-        tag: v1
+        build:
+          pull: yes
+          path: /movie-analyst-ui/
         force_source: yes
         push: no
         source: build
@@ -78,8 +78,8 @@
 
     - name: Create container
       docker_container:
-        name: ui
-        image: movie-analyst-ui/ui:v1
+        name: ui_cont
+        image: ui
         state: started
         recreate: yes
         published_ports:
