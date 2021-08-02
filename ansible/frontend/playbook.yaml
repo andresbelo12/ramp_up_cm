@@ -74,7 +74,7 @@
         push: yes
         source: build
       delegate_to: 127.0.0.1
-      become: no  
+      become: yes  
 
     - name: Create container
       docker_container:
@@ -84,6 +84,7 @@
         recreate: yes
         published_ports:
           - "3030:3030"
+      become: yes  
     
     
     
