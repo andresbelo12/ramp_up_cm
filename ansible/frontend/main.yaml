@@ -1,6 +1,5 @@
 ---
 - hosts: frontend_machines
-  connection: local
 
   vars:
 
