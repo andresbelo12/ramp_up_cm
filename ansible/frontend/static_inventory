@@ -1,0 +1,5 @@
+[frontend_machines]
+127.0.0.1
+
+[frontend_machines:vars]
+ansible_connection=local
