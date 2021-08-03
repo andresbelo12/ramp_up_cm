@@ -1,5 +1,5 @@
 ---
-- hosts: local
+- hosts: frontend_machines
   connection: local
 
   vars:
@@ -75,7 +75,7 @@
         version: "{{ default_branch }}"
       become: yes
     
-    - name: Build an image and push
+    - name: Build an image
       docker_image:
         name: "{{ docker_image_name }}"
         build:
