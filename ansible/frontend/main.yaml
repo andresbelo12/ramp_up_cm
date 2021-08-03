@@ -3,11 +3,8 @@
   connection: local
 
   vars:
-    github_repo_url: https://github.com/andresbelo12/movie-analyst-ui.git
-    repo_path: /movie-analyst-ui
-    update_repo: yes
-    default_branch: master
-    docker_image_name: ui
+
+    docker_image_name: andresbelo12/perficient-devops-ramp-up-ui:v1
     docker_container_name: ui_cont
     application_port: "3030:3030"
 
@@ -67,32 +64,14 @@
         name: docker
         state: started
 
-    - name: Clone the repository
-      git:
-        repo: "{{ github_repo_url }}"
-        dest: "{{ repo_path }}"
-        update: "{{ update_repo }}"
-        version: "{{ default_branch }}"
-      become: yes
-    
-    - name: Build an image
-      docker_image:
-        name: "{{ docker_image_name }}"
-        build:
-          pull: yes
-          path: "{{ repo_path }}/"
-        force_source: yes
-        push: no
-        source: build
-      delegate_to: 127.0.0.1
-      become: yes  
-
     - name: Create container
       docker_container:
         name: "{{ docker_container_name }}"
         image: "{{ docker_image_name }}"
         state: started
+        pull: yes
         recreate: yes
+        detach: yes
         published_ports:
           - "{{ application_port }}"
         env:
