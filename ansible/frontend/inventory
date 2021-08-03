@@ -1,0 +1,5 @@
+[_Name_Frontend_AndresLopezB_Terraform]
+127.0.0.1
+
+[f_Name_Frontend_AndresLopezB_Terraform:vars]
+ansible_connection=local

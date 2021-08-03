@@ -1,5 +1,5 @@
 ---
-- hosts: frontend_machines
+- hosts: _Name_Frontend_AndresLopezB_Terraform
 
   vars:
 
