@@ -1,0 +1,20 @@
+# aws ec2 ansible dynamic inventory plugin
+plugin: aws_ec2
+
+# set the regions. 
+regions: 
+  - us-west-1
+
+strict: False
+keyed_groups:
+  - key: tags
+
+hostnames:
+# a list in order of precedence for hostname variables.
+# 
+  - ip-address
+  - dns-name
+  - tag:Name
+  - private-ip-address
+compose:
+  ansible_host: private_ip_address
