@@ -17,4 +17,4 @@ hostnames:
   - tag:Name
   - private-ip-address
 compose:
-  ansible_host: tag_Name,private_ip_address
+  ansible_host: tag_Name_Backend_AndresLopezB_Terraform, private_ip_address
