@@ -14,7 +14,8 @@ hostnames:
 # 
   - ip-address
   - dns-name
-  - tag:Name
+  - tag:Name_Backend_AndresLopezB_Terraform
   - private-ip-address
+  - network-interface.addresses.private-ip-address
 compose:
-  ansible_host: tag_Name_Backend_AndresLopezB_Terraform, private_ip_address
+  ansible_host: private-ip-address
