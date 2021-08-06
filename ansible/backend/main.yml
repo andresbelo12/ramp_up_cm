@@ -3,7 +3,7 @@
 
   vars:
 
-    docker_image_name: andresbelo12/perficient-devops-ramp-up-api:v1
+    docker_image_name: andresbelo12/perficient-devops-ramp-up-api:latest
     docker_container_name: api_cont
     application_port: "3000:3000"
 
