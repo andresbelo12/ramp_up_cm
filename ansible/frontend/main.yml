@@ -3,7 +3,7 @@
 
   vars:
 
-    docker_image_name: andresbelo12/perficient-devops-ramp-up-ui:v1
+    docker_image_name: andresbelo12/perficient-devops-ramp-up-ui:latest
     docker_container_name: ui_cont
     application_port: "3030:3030"
 
